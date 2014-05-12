@@ -1,8 +1,10 @@
 
 #include<stdio.h>
+#include<stdlib.h>
 
-#define BR_PIT 10
-#define BR_ODG 4
+#define BR_PIT 10  // Ukupan broj pitanja u bazi
+#define BR_ODG 4   // Broj odgovora po pitanju
+#define BR_KVPIT 5 // Broj pitanja u kvizu
 
 char *pitanja[BR_PIT]={
 	"Koje godine se 'ZX Spectrum' pojavio na trzistu?",
@@ -43,22 +45,50 @@ char tacno[BR_PIT]={
 4
 };
 
+char ipit[BR_PIT];
+
 int pit_br;
 int odg_br;
 int br_poena=0;
 int tipka;
 
 
+// Funkcija koja vraca sadrzaj FRAMES
+// (sluzi kao slucajan broj)
+int my_rand(){
+	#asm
+	ld a, (23672)
+	ld l, a
+	#endasm
+}
+
+// Inicijalizacija sl. niza indeksa (Fisher–Yates shuffle)
+ipit_init(){
+	int i,j;
+	for(i=0;i<BR_PIT;i++){
+		j=rand()%(i+1);
+		if(i!=j) ipit[i]=ipit[j]
+		ipit[j]=i;
+	}
+	
+}
+
+
 main(){
+	int i;
 	printf("%c%c%c**********  ZX  KVIZ  **********\n\n",12,1,32);
 	printf("%c%cDobrodosli u kviz o poznavanju jednog o najpopularnijih 8-bitnih racunara 80-tih godina u bivsoj SFRJ, 'ZX Spectrum'-a. ",1,64);
-	printf("Kroz %d pitanja bice provereno Vase znanje o pojedinostima o njegovom nastanku i funkcionisanju.", BR_PIT);
+	printf("Kroz %d pitanja bice provereno Vase znanje o pojedinostima o njegovom nastanku i funkcionisanju.", BR_KVPIT);
 	printf("\nZa pocetak kviza pritisnite bilo koju tipku. Srecno!");
 	getchar();
+	srand(my_rand());
 
 	while(1){
-	for(pit_br=0;pit_br<BR_PIT;pit_br++){
-		printf("%cPitanje %d. od %d:\n %s\n", 12, pit_br+1, BR_PIT, pitanja[pit_br]);
+	ipit_init();
+	br_poena=0;
+	for(i=0;i<BR_KVPIT;i++){
+		pit_br=ipit[i];
+		printf("%cPitanje %d. od %d:\n %s\n", 12, i+1, BR_KVPIT, pitanja[pit_br]);
 		for(odg_br=0;odg_br<BR_ODG;odg_br++){
 			printf("\t[%d] %s\n", odg_br+1, odgovor[pit_br*BR_ODG+odg_br]);
 		}
@@ -74,7 +104,7 @@ main(){
 			br_poena++;
 			printf("TACNO!!!\n\n");
 		} else printf ("Pogresno.\n\n");
-		if(pit_br!=BR_PIT-1){
+		if(i!=BR_KVPIT-1){
 			printf("Za nastavak pritisnite bilo koju tipku");
 			getchar();
 		}
@@ -82,7 +112,7 @@ main(){
 		
 	};
 kraj:
-	printf("Broj osvojenih poena je %d od mogucih %d\n", br_poena, BR_PIT);
+	printf("Broj osvojenih poena je %d od mogucih %d\n", br_poena, BR_KVPIT);
 	printf("Da li zelite da pokusate jos jednom? (D/N)\n");
 	tipka=getchar();
 	if(tipka!='d' && tipka!='D') break;
