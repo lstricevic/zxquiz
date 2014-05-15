@@ -136,7 +136,8 @@ main(){
 	printf("Kroz %d pitanja bice\nprovereno Vase znanje o pojedinostima o njegovom nastanku i\nfunkcionisanju. ", BR_KVPIT);
 	printf("Za svako pitanje je ponudjeno %d odgovora, koje\nbirate pritiskom na tastere '1'-'%d'. ", BR_ODG, BR_ODG);
 	printf("Vreme za odgovor na svako\npojedinacno pitanje je %d sekundi. ", VREME_PIT);
-	printf("\nZa pocetak kviza pritisnite bilo koju tipku. Srecno!");
+	printf("\n\nZa pocetak kviza pritisnite bilo koju tipku. Srecno!");
+	printf("%c%c\n\n\n\n\n\n\n\n\n\n\n\n%c \"ONCE UPON A BYTE\" 2014%c%c", 1, 32, 0x7f,1,64);
 	getchar();
 	srand(my_rand());
 
@@ -147,7 +148,7 @@ main(){
 		pit_br=ipit[i];
 		printf("%cPitanje %d. od %d:\n %s\n\n", 12, i+1, BR_KVPIT, pitanja[pit_br]);
 		for(odg_br=0;odg_br<BR_ODG;odg_br++){
-			printf("\t[%d] %s\n", odg_br+1, odgovor[pit_br*BR_ODG+odg_br]);
+			printf(" [%d] %s\n", odg_br+1, odgovor[pit_br*BR_ODG+odg_br]);
 		}
 		printf("\n\nTipke 1-4 za izbor odgovora\nTipka BREAK za izlazak\n");
 
@@ -173,8 +174,10 @@ main(){
 	proc_poena=(100*br_poena)/BR_KVPIT;
 	printf("%cProcenat osvojenih poena je %d%%\n\n", 12, proc_poena);
 	printf("Da li zelite da pokusate jos jednom? (D/N)\n");
-	tipka=getchar();
-	if(tipka!='d' && tipka!='D') break;
+	do{
+		tipka=getchar();
+	} while (tipka!='d' && tipka!='D' && tipka!='n' && tipka!='N');
+	if(tipka=='n' || tipka=='N') break;
 	}
 	printf("\n\nHvala na ucescu u kvizu!\n");
 }
