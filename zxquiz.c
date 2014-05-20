@@ -102,7 +102,7 @@ ipit_init(void){
 	int i,j;
 	for(i=0;i<BR_PIT;i++){
 		j=rand()%(i+1);
-		if(i!=j) ipit[i]=ipit[j]
+		if(i!=j) ipit[i]=ipit[j];
 		ipit[j]=i;
 	}
 	
@@ -173,11 +173,19 @@ main(){
 	};
 	proc_poena=(100*br_poena)/BR_KVPIT;
 	printf("%cProcenat osvojenih poena je %d%%\n\n", 12, proc_poena);
-	printf("Da li zelite da pokusate jos jednom? (D/N)\n");
+
+// Provera da li zelimo izlazak
+
+/*	printf("Da li zelite da pokusate jos jednom? (D/N)\n");
 	do{
 		tipka=getchar();
 	} while (tipka!='d' && tipka!='D' && tipka!='n' && tipka!='N');
 	if(tipka=='n' || tipka=='N') break;
+*/
+
+// 
+	printf("Za ponovno testiranje pritisnite bilo koju tipku.\n");
+	getchar();
 	}
 	printf("\n\nHvala na ucescu u kvizu!\n");
 }
